@@ -44,7 +44,7 @@ jobs:
         username: ${{ secrets.USERNAME }}
         key: ${{ secrets.SSH_KEY }}
         script: |
-          rm -rf builds/${{ github.run_id }}
-          mkdir builds/${{ github.run_id }}
+          rm -rf builds/uncompressed/${{ github.run_id }}
+          mkdir builds/uncompressed/${{ github.run_id }}
           tar -zxf builds/compressed/build-program-${{ github.run_id }}.tgz -C builds/uncompressed/${{ github.run_id }}
           
