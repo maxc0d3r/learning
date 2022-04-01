@@ -1,0 +1,67 @@
+<div *ngIf="enablewisdomstory">
+  <!-- related wisdom stories -->
+<div class="row index_rwst_title" *ngIf="wisdomstories[0].length !== 0">
+  <div class="col-md-12 col-sm-12 col-xs-12 p0">
+    <h4 class="txt212 mtb0px">
+      Related Wisdom Stories
+    </h4>
+  </div>
+</div>
+
+<!-- stories -->
+
+  
+<div class="row index_rwst">
+  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 p0" *ngFor="let data of wisdomstories">
+   
+    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 prelative mb10px" *ngFor="let item of data">
+      <a (click)="viewstory(item)">
+        <img src="{{item['Img']}}" alt="" class="img-responsive img_index_rwst">
+        <h4 class="mtb0px txt210 absolute_index_rwst_title tleft">
+          {{item['Title']}}
+        </h4>
+      </a>
+    </div>
+     
+  </div>
+</div>
+
+<!-- /stories -->
+
+<div class="panel-group index_rwst_view_more" id="accordion_ws" *ngIf="wisdomstoriesbottom.length !== 0">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#ws_01">
+        <div class="row">
+          <div class="col-md-12 col-sm-12 col-xs-12">
+            <h4 class="txt111 mtb0px tcenter mb20px">
+              View more
+            </h4>
+          </div>
+        </div>
+      </a>
+    </div>
+    <div id="ws_01" class="panel-collapse collapse">
+      <div class="panel-body">
+        <!-- stories -->
+         <div class="row index_rwst">
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 p0" *ngFor="let data of wisdomstoriesbottom">
+   
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 prelative mb10px" *ngFor="let item of data">
+              <a (click)="viewstory(item)">
+                <img src="{{item['Img']}}" alt="" class="img-responsive img_index_rwst">
+                <h4 class="mtb0px txt210 absolute_index_rwst_title tleft">
+                  {{item['Title']}}
+                </h4>
+              </a>
+            </div>
+             
+          </div>
+        </div>
+        <!-- /stories -->
+       </div>
+    </div>
+  </div>
+</div>
+<!-- /related wisdom stories -->
+</div>
