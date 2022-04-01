@@ -42,7 +42,7 @@ jobs:
       with:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
-        key: $${ secrets.SSH_KEY }}
+        key: ${ secrets.SSH_KEY }}
         script: |
           rm -rf builds/${{ github.run_id }}
           mkdir builds/${{ github.run_id }}
