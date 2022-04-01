@@ -1,0 +1,51 @@
+name: build-course-staging
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+	build:
+		runs-on: ubuntu-latest
+
+		steps:
+		- name: Checkout code
+			uses: actions/checkout@v2
+		- name: Setup nodejs
+		  uses: actions/setup-node@v2
+			with:
+				node-version: '14'
+		- name: Install global dependencies
+			run: |
+				npm install -g @ionic/cli
+				npm install -g @angular/cli
+		- name: Install project dependencies
+			run: |
+		    cd program
+				npm install
+		- name: Build the project
+			run: |
+				cd program
+				ionic build -- -c=staging --base-href /course
+				mkdir -p builds/compressed
+				tar -czf builds/compressed/build-program-${{ github.run_id }}.tgz www/
+		- name: Copy the artifact to remote server
+			uses: appleboy/scp-action@master
+			with:
+				host: ${{ secrets.HOST }}
+				username: ${{ secrets.USERNAME }}
+				key: ${{ secrets.SSH_KEY }}
+				source: "program/builds/compressed/"
+				target: "builds"
+				strip_components: 2
+		- name: Setup the build on remote server
+			uses: appleboy/ssh-action@master
+			with:
+				host: ${{ secrets.HOST }}
+				username: ${{ secrets.USERNAME }}
+				key: $${ secrets.SSH_KEY }}
+				script: |
+					rm -rf builds/${{ github.run_id }}
+					mkdir builds/${{ github.run_id }}
+					tar -zxf builds/compressed/build-program-${{ github.run_id }}.tgz -C builds/uncompressed/${{ github.run_id }}
+					
